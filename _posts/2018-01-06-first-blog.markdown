@@ -6,7 +6,7 @@ date:       2018-01-05 10:00:00
 author:     "Tabaco"
 header-img: "img/in-post/post-first-blog/first-blog.jpg"
 header-mask: 0.3
-catalog:    true
+catalog:	true
 tags:
     - 生活紀錄
 ---
