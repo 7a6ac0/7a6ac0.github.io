@@ -120,7 +120,7 @@ private fun initializeExoplayer() {
 
 3. 準備Player
 在ExoPlayer中，任何播放媒體均由MediaSource來表示，如要播放一塊媒體，必須先創建一個相對應的MediaSource，然後將此對像傳遞給simpleExoplayer.prepare。
-ExoPlayer庫為DASH(DashMediaSource)，SmoothStreaming(SsMediaSource)，HLS(HlsMediaSource)和常規媒體文件(ExtractorMediaSource)都提供了MediaSource的實現。以下顯示如何使用建立適合播放MP4文件的MediaSource。
+ExoPlayer庫為DASH(DashMediaSource)，SmoothStreaming(SsMediaSource)，HLS(HlsMediaSource)和常規媒體文件(ExtractorMediaSource)都提供了MediaSource的實現。以下程式碼為如何建立適合播放MP4文件的MediaSource。
 ```kotlin
 private fun buildMediaSource(uri: Uri) : MediaSource {
         val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "ExoplayerSample"), bandwidthMeter)
