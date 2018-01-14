@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: tabaco7517@gmail.com
 description: "關於APP開發、黑客與攝影 | 這裡是 Tabaco(@7a6ac0) 的個人部落格，與你一起發現更大的世界。"
 keyword: "Tabacoの生活紀錄, tabaco, 7a6ac0, @7a6ac0, Tabaco Blog, APP, Java, Android, Kotlin, Photography"
-url: "https://7a6ac0.github.io"              # your host, for absolute URL
+url: "http://tabacowang.me"              # your host, for absolute URL
 baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
