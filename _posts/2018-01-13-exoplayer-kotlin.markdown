@@ -53,6 +53,7 @@ compile 'com.google.android.exoplayer:exoplayer-ui:r2.X.X'
 ## 建立Exoplayer APP
 
 1. 在XML內新增Exoplayer的view(SimpleExoPlayerView)，並為了顯示正在讀取影片，這在多新增一個`ProgressBar`。
+    
     ```xml
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -85,20 +86,24 @@ compile 'com.google.android.exoplayer:exoplayer-ui:r2.X.X'
     </LinearLayout>
     ```
 2. 初始化播放器
-```kotlin
-private lateinit var videoFrameLayout: FrameLayout
-private lateinit var simpleExoPlayerView: SimpleExoPlayerView
-private lateinit var videoProgressbar: ProgressBar
-private lateinit var simpleExoplayer: SimpleExoPlayer
-private val url = "http://demos.webmproject.org/exoplayer/glass.mp4"
-private var mResumePosition = 0L
-private val bandwidthMeter by lazy {
-        DefaultBandwidthMeter()
-}
-private val adaptiveTrackSelectionFactory by lazy {
-        AdaptiveTrackSelection.Factory(bandwidthMeter)
-}
-private fun initializeExoplayer() {
+
+    ```kotlin
+    private lateinit var videoFrameLayout: FrameLayout
+    private lateinit var simpleExoPlayerView: SimpleExoPlayerView
+    private lateinit var videoProgressbar: ProgressBar
+    private lateinit var simpleExoplayer: SimpleExoPlayer
+    private val url = "http://demos.webmproject.org/exoplayer/glass.mp4"
+    private var mResumePosition = 0L
+
+    private val bandwidthMeter by lazy {
+            DefaultBandwidthMeter()
+    }
+
+    private val adaptiveTrackSelectionFactory by lazy {
+            AdaptiveTrackSelection.Factory(bandwidthMeter)
+    }
+
+    private fun initializeExoplayer() {
         simpleExoplayer = ExoPlayerFactory.newSimpleInstance(
                 DefaultRenderersFactory(this),
                 DefaultTrackSelector(adaptiveTrackSelectionFactory),
@@ -116,25 +121,28 @@ private fun initializeExoplayer() {
         simpleExoplayer.playWhenReady = true
         simpleExoplayer.addListener(playerEventListener)
     }
-```
+    ```
 
 3. 準備Player
-在ExoPlayer中，任何播放媒體均由MediaSource來表示，如要播放一塊媒體，必須先創建一個相對應的MediaSource，然後將此對像傳遞給simpleExoplayer.prepare。
-ExoPlayer庫為DASH(DashMediaSource)，SmoothStreaming(SsMediaSource)，HLS(HlsMediaSource)和常規媒體文件(ExtractorMediaSource)都提供了MediaSource的實現。以下程式碼為如何建立適合播放MP4文件的MediaSource。
-```kotlin
-private fun buildMediaSource(uri: Uri) : MediaSource {
+
+    在ExoPlayer中，任何播放媒體均由MediaSource來表示，如要播放一塊媒體，必須先創建一個相對應的MediaSource，然後將此對像傳遞給simpleExoplayer.prepare。
+    ExoPlayer庫為DASH(DashMediaSource)，SmoothStreaming(SsMediaSource)，HLS(HlsMediaSource)和常規媒體文件(ExtractorMediaSource)都提供了MediaSource的實現。以下程式碼為如何建立適合播放MP4文件的MediaSource。
+    ```kotlin
+    private fun buildMediaSource(uri: Uri) : MediaSource {
         val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "ExoplayerSample"), bandwidthMeter)
         return ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
     }
-```
+    ```
 
 4. 監聽播放器的狀態
-讓影片尚未播放前顯示正在讀取影片，而在可以播放狀態下隱藏讀取狀態，讓使用者得知可以觀看影片，因此透過Player.EventListener的onPlayerStateChanged更改ProgressBar的狀態。
-```kotlin
-private val playerEventListener by lazy {
-        PlayerEventListener()
-}
-inner private class PlayerEventListener : Player.EventListener {
+
+    讓影片尚未播放前顯示正在讀取影片，而在可以播放狀態下隱藏讀取狀態，讓使用者得知可以觀看影片，因此透過Player.EventListener的onPlayerStateChanged更改ProgressBar的狀態。
+    ```kotlin
+    private val playerEventListener by lazy {
+            PlayerEventListener()
+    }
+
+    inner private class PlayerEventListener : Player.EventListener {
         override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
         }
 
@@ -173,11 +181,12 @@ inner private class PlayerEventListener : Player.EventListener {
             }
         }
     }
-```
+    ```
 
 5. 紀錄上次播放時間點
-無論是關閉手機螢幕或按HOME鍵，APP均會進入onPause狀態，為了使重新開啟APP時回到上次時間點，必須記錄上次影片時間點。而在APP進入onDestroy時釋放Exoplayer。
-```kotlin
+
+    無論是關閉手機螢幕或按HOME鍵，APP均會進入onPause狀態，為了使重新開啟APP時回到上次時間點，必須記錄上次影片時間點。而在APP進入onDestroy時釋放Exoplayer。
+    ```kotlin
     override fun onResume() {
         simpleExoplayer.seekTo(mResumePosition)
         super.onResume()
@@ -192,6 +201,7 @@ inner private class PlayerEventListener : Player.EventListener {
         releaseExoplayer()
         super.onDestroy()
     }
+    
     private fun pauseExoplayer() {
         simpleExoplayer.playWhenReady = false
         mResumePosition = simpleExoplayer.currentPosition
@@ -201,7 +211,7 @@ inner private class PlayerEventListener : Player.EventListener {
         if (simpleExoplayer != null)
             simpleExoplayer.release()
     }
-```
+    ```
 
 以上設定完就可以正常播放影片了。
 
