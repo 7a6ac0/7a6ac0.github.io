@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "[Kotlin] 使用Exoplayer播放器播放影片"
+title:      "【Kotlin】使用Exoplayer播放器播放影片"
 subtitle:   "Use Exoplayer to play video with kotlin."
 date:       2018-01-11 15:10:00
 author:     "Tabaco"

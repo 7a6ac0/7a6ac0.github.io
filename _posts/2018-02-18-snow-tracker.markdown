@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "[生活紀錄] 合歡山松雪樓住宿追雪＆清境綿羊秀&日月潭纜車"
+title:      "【生活紀錄】合歡山松雪樓住宿追雪＆清境綿羊秀&日月潭纜車"
 subtitle:   "[Life] I hate snow, it's sooooooooo cold."
 date:       2018-02-18 19:23:10
 author:     "Tabaco"
@@ -58,3 +58,5 @@ tags:
 ***Photograph by [tabaco Wang](https://flic.kr/p/24p9Koc) (flickr)***
 
 後記：這幾天玩下來雖然很累但都蠻有趣的，除了合歡山很冷以外XD，一路上也拍了很多照片，也知道自己缺少哪些設備(汗，很感謝這趟一起出遊的友人。
+
+完整的相簿可以到我的 [flickr](https://flic.kr/s/aHsmekbFzs) 觀看！

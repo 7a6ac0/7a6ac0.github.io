@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "[Kotlin] Kotlin基礎：Standard Extension Functions"
+title:      "【Kotlin】Kotlin基礎：Standard Extension Functions"
 subtitle:   "Kotlin Basic：Standard Extension Functions"
 date:       2018-01-18 17:20:00
 author:     "Tabaco"
