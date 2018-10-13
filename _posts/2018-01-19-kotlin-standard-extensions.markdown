@@ -76,23 +76,20 @@ val password: Password = PasswordGenerator().run {
 public inline fun <T> T.apply(block: T.() -> Unit): T { block(); return this }
 ```
 `apply`的用法跟`run`很像，但有一點不同的是`apply`的返回值永遠都為自身對象，在函式區塊內可以用`this`代表自身對象。
-假如有一個 object 在每次被建立時預設都同一個設定，可以使用`apply`來避免使用`init{}`，如下列的程式碼：
+用以下範例示範如何使用apply建立一個Intent：
 ```kotlin
-class Message(message: String, signature: String) {
-  val body = MessageBody()
-  
-  init {
-    body.text = message + "\n" + signature
-  }
+// 普通建立Intent方法
+fun createIntent(intentData: String, intentAction: String): Intent {
+    val intent = Intent()
+    intent.action = intentAction
+    intent.data=Uri.parse(intentData)
+    return intent
 }
-```
-可以用`apply`更改為：
-```kotlin
-class Message(message: String, signature: String) {
-  val body = MessageBody().apply {
-    text = message + "\n" + signature
-  }
-}
+
+// 使用apply建立Intent方法
+fun createIntent(intentData: String, intentAction: String) =
+        Intent().apply { action = intentAction }
+                .apply { data = Uri.parse(intentData) }
 ```
 ## let
 ```kotlin
@@ -102,34 +99,38 @@ public inline fun <T, R> T.let(block: (T) -> R): R = block(this)
 
 範例程式碼：
 ```kotlin
-val fruitBasket = ...
+val original = "abc"
 
-val result = apple?.let {
-  fruitBasket.add(it)
+original.let {
+    println("The original String is $it") // "abc"
+    it.reversed() 
+}.let {
+    println("The reverse String is $it") // "cba"
+    it.length  
+}.let {
+    println("The length of the String is $it") // 3
 }
 ```
-apple變數只有在不為`null`時才會加入fruitBasket，而result的返回值為`fruitBasket.add`的結果。
+`let`的返回值是函式區塊內的最後一個對象，它的值和類型都可以被改變，如上列程式碼中第一次`let`返回值為String型態的`cba`，第二次`let`返回值則變更為Int型態的數值`3`。
 ## also
 ```kotlin
 public inline fun <T> T.also(block: (T) -> Unit): T { block(this); return this }
 ```
-Kotlin 1.1版才新增的 extension function，`also`將會返回最後一行的返回值，在函式區塊內使用`it`代表該對象。
+Kotlin 1.1版才新增的 extension function，`also`將會返回值永遠都為自身對象，在函式區塊內使用`it`代表該對象。
 ```kotlin
-class FruitBasket {
-    private var weight = 0
+val original = "abc"
 
-    fun addFrom(appleTree: AppleTree) {
-        val apple = appleTree.pick().also { apple ->
-            this.weight += apple.weight
-            add(apple)
-        }
-        ...
-    }
-    ...
-    fun add(fruit: Fruit) = ...
+original.also {
+    println("The original String is $it") // "abc"
+    it.reversed() 
+}.also {
+    println("The reverse String is ${it}") // "abc"
+    it.length  
+}.also {
+    println("The length of the String is ${it}") // "abc"
 }
 ```
-在上面的範例將函式區塊內的`it`變數更改為`apple`，最後返回`add(apple)`的結果。
+從上列程式碼得知不管調用多少次`also`都是返回original原本的String型態。
 ## with
 ```kotlin
 public inline fun <T, R> with(receiver: T, block: T.() -> R): R = receiver.block()
@@ -152,3 +153,4 @@ string
 ## 參考資料
 * [Kotlin Basics: Standard Extension Functions](https://lmller.github.io/kotlin-standard-extensions)
 * [Standard.kt](https://github.com/JetBrains/kotlin/blob/master/libraries/stdlib/src/kotlin/util/Standard.kt)
+* [Mastering Kotlin standard functions: run, with, let, also and apply](https://medium.com/@elye.project/mastering-kotlin-standard-functions-run-with-let-also-and-apply-9cd334b0ef84)
