@@ -59,6 +59,8 @@ Android N(API 24)以後可在APP資源內新增安全性設定檔以防止MITM�
 ## HttpsURLConnection憑證綁定
 接著進入~~業配~~主題(終於啊～)，這邊將展示如何作憑證綁定，詳細的程式碼可以參考[SSLPinning][i4]。
 
+> 對OkHttp憑證榜定方式有興趣的可以看我另一篇文章：[OkHttp實作憑證綁定的方法][i5]
+
 從[github][i3]網站上下載憑證，放在```assets```資料夾內
 ![](/img/in-post/post-httpsurlconnection-pinning/httpsurlconnection-pinning-1.png)
 
@@ -199,3 +201,4 @@ private String connect(URL url) throws IOException {
 [i2]: https://developer.android.com/training/articles/security-ssl.html
 [i3]: https://github.com
 [i4]: https://github.com/7a6ac0/SSLPinning
+[i5]: https://tabacowang.me/2018/10/12/okhttp-pinning/
