@@ -2,7 +2,7 @@
 layout:     post
 title:      "【Android】OkHttp實作憑證綁定的方法"
 subtitle:   "OkHttp with certificate pinning."
-date:       2018-10-14 13:23:12
+date:       2018-10-12 13:23:12
 author:     "Tabaco"
 header-img: "img/in-post/post-okhttp-pinning/post-bg-okhttp-pinning.png"
 header-mask: 0.3
@@ -26,18 +26,18 @@ tags:
 先建立[CertificatePinner][i4]的實例，再新增憑證參數即可。
 ```java
 CertificatePinner certPinner = new CertificatePinner.Builder()
-								.add("github.com",
-                                	"sha256/pL1+qb9HTMRZJmuC/bB/ZI9d302BYrrqiVuRyW+DGrU=")
-                        		.add("github.com",
-                                	"sha256/RRM1dGqnDFsCJXBTHky16vi1obOlCgFFn/yOhI/y+ho=")
-                        		.build();
+    .add("github.com",
+        "sha256/pL1+qb9HTMRZJmuC/bB/ZI9d302BYrrqiVuRyW+DGrU=")
+    .add("github.com",
+        "sha256/RRM1dGqnDFsCJXBTHky16vi1obOlCgFFn/yOhI/y+ho=")
+    .build();
 ```
 接著將`CertificatePinner`的實例加入`OkHttpClient`內，之後如果可以正常連線代表已經有憑證榜定了。
 ```java
 private String connect(String url) throws IOException {
-	OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .certificatePinner(mCertPinner)
-                .build();
+    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        .certificatePinner(mCertPinner)
+        .build();
 
     Request request = new Request.Builder()
                 .url(url)
