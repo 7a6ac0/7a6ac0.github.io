@@ -75,10 +75,11 @@ chrome-tab-theme-color: "#000000"
 
 # Friends
 friends: [
-    #{
-    #    title: "Hux Blog",
-    #    href: "http://huangxuan.me"
-    #},{
+    {
+       title: "Jasmine's BLOG",
+       href: "https://jasminmin.github.io/"
+    }
+    #,{
     #    title: "Foo",
     #    href: "#"
     #},{
