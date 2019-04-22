@@ -56,7 +56,7 @@ $ git config --global user.email "you@example.com"
 ```note
 $ mkdir android-7.1.1_r24
 $ cd android-7.1.1_r24
-~/android-7.1.1_r24$ repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.1_r24
+$ repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.1_r24
 ```
 4. 開始下載
 下載時間取決於你的網路速度，但都需要好幾個小時(´_ゝ`)
@@ -73,8 +73,8 @@ $ repo sync
 AOSP系統可選擇三種系統格式，分別是user、userdebug及eng，詳細可以參考 [Target][Target]。
 ```note
 $ cd android-7.1.1_r24
-~/android-7.1.1_r24$ source build/envsetup.sh
-~/android-7.1.1_r24$ lunch aosp_bullhead-user
+$ source build/envsetup.sh
+$ lunch aosp_bullhead-user
 ```
 以上設定完沒有出錯就可以開始編譯AOSP系統，其中j```N```，N代表要使用多少個CPU核心作編譯。
 ```note
@@ -131,7 +131,7 @@ $ adb reboot bootloader
 ```
 2. flash AOSP
 ```note
-~/android-7.1.1_r24$ fastboot flashall -w
+$ fastboot flashall -w
 ```
 最後重開機進Android畫面就代表成功更換成AOSP系統了！
 
