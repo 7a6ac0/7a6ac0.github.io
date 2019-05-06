@@ -30,7 +30,7 @@ tags:
 ## Firebase Crashlytics
 ```Firebase Crashlytics```是一款輕量級的即時當機崩潰記錄器，可幫助我們跟踪，確定優先級並解決影響您應用質量的穩定性問題。當問題嚴重性突然增加時，它會發出警報。Crashlytics通過對App Crash進行分組並突出顯示導致App Crash的情況，從而為您節省故障排除時間。
 
-本篇的Crash記錄主要是上傳到Firebase Crashlytics，而不上傳[Fabric][Fabric]，因為Crashlytics已經整合進Firebase，所以就不需要再連接[Fabric][Fabric]，有關其Firebase設定方式後續會寫一篇教學。(*ﾟ∀ﾟ*)
+本篇的崩潰記錄主要是上傳到Firebase Crashlytics，而不上傳[Fabric][Fabric]，因為Crashlytics已經整合進Firebase，所以就不需要再連接[Fabric][Fabric]，有關其Firebase設定方式後續會寫一篇教學。(*ﾟ∀ﾟ*)
 
 ## Crashlytics SDK
 在APP內要使用Crashlytics回報崩潰記錄前需要作些設定。在Project等級的```build.gradle```內新增Crashlytics repositories及dependencies：
@@ -92,6 +92,76 @@ implementation 'com.jakewharton.timber:timber:4.7.1'
 接著可以在程式任何一個地方使用```Timber.d("Message")```印出Debug訊息，```Timber.e("Error Message")```印出Error訊息。
 
 不知道大家有沒有發現Timber不需要像Log一樣要傳入TAG參數，因為在呼叫Timber時會自動取得目前的class name作為TAG，這一點真的是很便利。
+
+## Crashlytics and Timber
+原本需要在每個程式碼的```exception```加上下列三行程式碼才算完成崩潰記錄，假如有許多地方都要作崩潰記錄，每次都要加上這三行實在令人崩潰啊啊啊(／‵Д′)／~ ╧╧
+```java
+try {
+    // throw exception
+    throwException()
+} catch (e: Exception) {
+    // Crashlytics
+    Crashlytics.logException(e)
+
+    // Firebase Crash Reporting
+    FirebaseCrash.logcat(Log.ERROR, TAG, e.printStackTrace())
+    FirebaseCrash.report(e)
+}
+```
+而改用```Timber```的話，只需要加上一行程式碼就可以完成崩潰記錄。
+```java
+try {
+    // throw exception
+    throwException()
+} catch (e: Exception) {
+    Timber.e(e.printStackTrace())
+}
+```
+在Application Class中呼叫```Timber.plant```來初始化Timber。其中可以透過```BuildConfig.DEBUG```判斷現在APP是Debug還是Release。
+
+Debug版則使用Timber內建的```Timber.DebugTree()```即可，而Release版則需要額外新增CrashlyticsTree類別作記錄。
+```java
+class MainApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(CrashlyticsTree())
+        }
+    }
+}
+```
+接著新增CrashlyticsTree類別來回報Release版的崩潰記錄。
+```java
+class CrashlyticsTree : Timber.Tree() {
+
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        if (priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO) {
+            return
+        }
+
+        Crashlytics.setInt(CRASHLYTICS_KEY_PRIORITY, priority)
+        Crashlytics.setString(CRASHLYTICS_KEY_TAG, tag)
+        Crashlytics.setString(CRASHLYTICS_KEY_MESSAGE, message)
+
+        if (t == null) {
+            Crashlytics.logException(Exception(message))
+        } else {
+            Crashlytics.logException(t)
+        }
+    }
+
+    companion object {
+        private val CRASHLYTICS_KEY_PRIORITY = "priority"
+        private val CRASHLYTICS_KEY_TAG = "tag"
+        private val CRASHLYTICS_KEY_MESSAGE = "message"
+    }
+}
+```
+最後就可以在Firebase內的Crashlytics頁面檢查全部的崩潰記錄。
 
 [Fabric]: https://get.fabric.io/
 [Timber]: https://github.com/JakeWharton/timber
