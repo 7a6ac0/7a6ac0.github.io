@@ -117,7 +117,7 @@ try {
     Timber.e(e.printStackTrace())
 }
 ```
-在Application Class中呼叫```Timber.plant```來初始化Timber。其中可以透過```BuildConfig.DEBUG```判斷現在APP是Debug還是Release。
+為了要使用Timber回報崩潰記錄，需要在APP內的Application Class中呼叫```Timber.plant```來初始化Timber。其中可以透過```BuildConfig.DEBUG```判斷現在APP是Debug還是Release。
 
 Debug版則使用Timber內建的```Timber.DebugTree()```即可，而Release版則需要額外新增CrashlyticsTree類別作記錄。
 ```java
