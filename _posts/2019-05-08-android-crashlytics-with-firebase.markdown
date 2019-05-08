@@ -2,7 +2,7 @@
 layout:     post
 title:      "【Android】在Firebase上作Crashlytics的設定"
 subtitle:   "Android crashlytics with Firebase"
-date:       2019-05-07 06:09:11
+date:       2019-05-08 20:09:11
 author:     "Tabaco"
 header-img: "img/in-post/post-android-crashlytics-with-firebase/post-bg-android-crashlytics-with-firebase.png"
 header-mask: 0.3
@@ -43,9 +43,16 @@ tags:
 3.  **設定Crashlytics**
     ```
     ```
-    aa
+    點選```開始設定Crashlytics```來設定Crashlytics。
+    ![](/img/in-post/post-android-crashlytics-with-firebase/android-crashlytics-with-firebase-9.png)
+    選擇```否，這個應用程式並未安裝任何版本的Crashlytics SDK```
+    ![](/img/in-post/post-android-crashlytics-with-firebase/android-crashlytics-with-firebase-10.png)
+    下一步要在APP設定SDK，詳細設定可以參考：[【Android】透過Crashlytics及Timber作Android logging][android-logging-with-crashlytics-and-timber]
+    ![](/img/in-post/post-android-crashlytics-with-firebase/android-crashlytics-with-firebase-11.png)
+    最後在Crashlytics檢查是否有崩潰記錄。
+    ![](/img/in-post/post-android-crashlytics-with-firebase/android-crashlytics-with-firebase-12.png)
 
 [android-logging-with-crashlytics-and-timber]: https://tabacowang.me/2019/05/06/android-logging-with-crashlytics-and-timber/
-[Firebase]: https://console.firebase.google.com/
+[Firebase]: https://firebase.google.com/
 [MVVMArch]: https://github.com/7a6ac0/MVVMArch
 [Authenticating]: https://developers.google.com/android/guides/client-auth
