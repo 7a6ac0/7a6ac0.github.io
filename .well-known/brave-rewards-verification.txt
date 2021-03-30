@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: tabacowang.me
+Token: 6f6eb720641603b39209a4d4e3aa201ddf61f27f042746d0abd427480173c288
